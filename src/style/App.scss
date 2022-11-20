@@ -1,0 +1,43 @@
+    @use "./abstract/" as *;
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        &::-webkit-scrollbar {
+            width: 6px;
+            background-color: #F5F5F5
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #3498db;
+            border-radius: 3px
+        }
+    }
+    
+    a {
+        text-decoration: none;
+        color: unset;
+    }
+    
+    .MuiButton-root {
+        text-transform: none !important;
+    }
+    
+    input::-ms-reveal {
+        display: none;
+    }
+    
+    div,
+    input,
+    a,
+    td,
+    label {
+        font-size: 15px;
+    }
