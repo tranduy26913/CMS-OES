@@ -13,18 +13,23 @@ import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import DiamondIcon from '@mui/icons-material/Diamond';
+import { useDispatch, useSelector } from 'react-redux';
+import { setListUser } from 'slices/userSlice';
 
 function SummaryUser(props) {
-  const [users, setUsers] = useState(samples)
+  const {users} = useSelector(state=>state.user)
+  const dispatch = useDispatch()
+  //const [users, setUsers] = useState(samples)
   useEffect(() => {
     const loadListUser = () => {//lấy danh sách bài kiểm tra
 
-      apiAdmin.getAllCourses()
+      apiAdmin.getAllUsers()
         .then(res => {
-          setUsers(res)
+          //setUsers(res)
+          dispatch(setListUser(res))
         })
     }
-    //loadListUser()
+    loadListUser()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

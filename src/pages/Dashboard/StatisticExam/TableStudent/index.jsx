@@ -61,13 +61,13 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-const TableStudent = () => {
+const TableStudent = ({exams}) => {
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [exams, setExams] = useState(tests)
+    //const [exams, setExams] = useState(tests)
     const { slug } = useParams()//lấy slug exam
     const role = useSelector(state => state.setting.role)
 
@@ -91,23 +91,6 @@ const TableStudent = () => {
     const filteredUsers = applySortFilter(tests, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
-
-    useEffect(() => {
-        const getStatistic = () => {
-            const params = { slug }
-            let response = null
-            if (role === 'student') {
-                response = apiStatistic.getStatisticExamByStudent(params)
-            }
-            else {
-                response = apiStatistic.getStatisticExamByStudent(params)
-            }
-            response.then(res => {
-                setExams(res)
-            })
-        }
-        //getStatistic()
-    }, [role, slug])
 
 
     return (

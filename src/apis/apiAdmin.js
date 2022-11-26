@@ -3,11 +3,11 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
  const apiAdmin = {
 
     getAllCourses: async (params) => {
-        const res = await axiosClientWithToken.get('/courses', {params})
+        const res = await axiosClientWithToken.get('/admin/list-course',)
         return res.data;
     },
     getAllBill: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+        const res = await axiosClientWithToken.get('/statistic/list-bills')
         return res.data;
     },
     getAllExam: async (params) => {
@@ -18,12 +18,12 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
         const res = await axiosClientWithToken.get('/statistic/all-bills')
         return res.data;
     },
-    getAllUser: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+    getAllUsers: async (params) => {
+        const res = await axiosClientWithToken.get('/admin/list-user')
         return res.data;
     },
     getAllTakeExam: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+        const res = await axiosClientWithToken.get('/statistic/exam-detail-by-teacher')
         return res.data;
     },
     deleteUser: async (params) => {
@@ -43,19 +43,28 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
         return res.data;
     },
     updateStatusUser: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+        const res = await axiosClientWithToken.put('/admin/update-user-status',params)
         return res.data;
     },
     updateRoleUser: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+        const res = await axiosClientWithToken.put('/admin/update-user-role',params)
         return res.data;
     },
-    updateRoleUser: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+    
+    getNumberOfCourses: async () => {
+        const res = await axiosClientWithToken.get('/statistic/number-of-courses')
         return res.data;
     },
-    updatePremiumUser: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/all-bills')
+    getNumberOfExams: async () => {
+        const res = await axiosClientWithToken.get('/statistic/number-of-exams')
+        return res.data;
+    },
+    getNumberOfUsers: async () => {
+        const res = await axiosClientWithToken.get('/statistic/number-of-users')
+        return res.data;
+    },
+    getNumberOfAssignments: async () => {
+        const res = await axiosClientWithToken.get('/statistic/number-of-assignments')
         return res.data;
     },
     getCourseBySlug: async (slug) => {

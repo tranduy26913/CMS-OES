@@ -20,6 +20,7 @@ import moment from 'moment';
 import apiAdmin from 'apis/apiAdmin';
 import FileSaver from 'file-saver';
 import * as XLSX from 'xlsx'
+import TypoOverflow from 'components/UI/TypoOverflow';
 
 
 // ----------------------------------------------------------------------
@@ -70,10 +71,11 @@ const TableStudent = () => {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [exams, setExams] = useState(samples)
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const { slug } = useParams()//lấy slug exam
     const role = useSelector(state => state.setting.role)
+    const { users } = useSelector(state => state.user)
+
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -90,20 +92,13 @@ const TableStudent = () => {
 
     const handleFilterByName = (event) => setFilterName(event.target.value);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - exams.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
-    const filteredUsers = applySortFilter(exams, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(users, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
 
-    useEffect(() => {
-        const getStatistic = () => {
-            apiAdmin.getAllUser().then(res => {
-                setExams(res)
-            })
-        }
-        //getStatistic()
-    }, [role, slug])
+
     const exportToCSV = () => {
         const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
         const fileExtension = '.xlsx';
@@ -153,13 +148,13 @@ const TableStudent = () => {
             />
 
             <Scrollbar>
-                <TableContainer sx={{ minWidth: 800, padding: '0 12px' }}>
+                <TableContainer sx={{ minWidth: 1000, padding: '0 12px' }}>
                     <Table>
                         <TableHeadCustom
                             order={order}
                             orderBy={orderBy}
                             headLabel={TABLE_HEAD}
-                            rowCount={exams.length}
+                            rowCount={users.length}
                             onRequestSort={handleRequestSort}
                         />
                         <TableBody>
@@ -172,9 +167,8 @@ const TableStudent = () => {
                                         key={idUser}
                                         tabIndex={-1}
                                     >
-                                        <TableCell align="left">
+                                        <TableCell sx={{ width: '20%' }} align="left">
                                             <Stack direction='row' alignItems='center' spacing={1}>
-
                                                 <Avatar alt={fullname} src={avatar} />
                                                 <Typography>
                                                     {fullname}
@@ -183,10 +177,12 @@ const TableStudent = () => {
                                         </TableCell>
                                         <TableCell align="center">{email}</TableCell>
                                         <TableCell align="center">{moment(birthday).format('DD/MM/YYYY')}</TableCell>
-                                        <TableCell align="center">{gender === 'male' ? 'Nam' : 'Nữ'}</TableCell>
+                                        <TableCell sx={{ width: '15%' }} align="center">{gender === 'Male' ? 'Nam' : 'Nữ'}</TableCell>
                                         <TableCell align="center">{phone}</TableCell>
                                         <TableCell align="center">{address}</TableCell>
-                                        <TableCell align="center">{school}</TableCell>
+                                        <TableCell align="center">
+                                            <TypoOverflow line={3}>{school}
+                                            </TypoOverflow></TableCell>
 
                                     </TableRow>
                                 );
@@ -214,7 +210,7 @@ const TableStudent = () => {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={exams.length}
+                count={users.length}
                 labelRowsPerPage='Số dòng mỗi trang'
                 rowsPerPage={rowsPerPage}
                 page={page}
@@ -224,28 +220,6 @@ const TableStudent = () => {
         </Stack>
     )
 }
-
-
-const samples = [
-    {
-        id: 1,
-        fullname: 'Trần Duy',
-        gender: 'male',
-        birthday: new Date().toISOString(),
-        role: 'TEACHER',
-        premium: true,
-        status: 'active'
-    },
-    {
-        id: 1,
-        fullname: 'Trần Duy',
-        gender: 'male',
-        birthday: new Date().toISOString(),
-        role: 'STUDENT',
-        premium: false,
-        status: 'inactive'
-    }
-]
 
 
 export default TableStudent

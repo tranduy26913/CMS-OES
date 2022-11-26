@@ -31,7 +31,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-function SelectRole({ id, role }) {
+function SelectRole({ username, role }) {
     const [openDialog, setOpenDialog] = useState(false)
     const [newRole, setNewRole] = useState(role)
     const handleOpen = () => setOpenDialog(true)
@@ -47,7 +47,7 @@ function SelectRole({ id, role }) {
     }
     const handleChangeRoleUser = () => {
         let idToast = toast.loading('Đang cập nhật')
-        apiAdmin.updateRoleUser({ newRole })
+        apiAdmin.updateRoleUser({username, role:newRole })
             .then(res => {
                 toast.update(idToast, { render: 'Cập nhật thành công', isLoading: false, type: 'success', autoClose: 1200 })
             })

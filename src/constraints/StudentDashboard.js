@@ -35,8 +35,8 @@ export const DASHBOARD_TEACHER = [
         id: 2,
         icon: SchoolIcon,
         text: 'Danh sách khoá học',
-        link: 'list-course',
-        list: ['list-course','create-course'],
+        link: 'manage-course',
+        list: ['manage-course','create-course'],
     },
    
     {

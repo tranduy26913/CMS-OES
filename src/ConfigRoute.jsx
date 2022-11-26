@@ -42,7 +42,7 @@ const TEACHER = [
     component: Profile
   },
   {
-    path: 'list-course',
+    path: 'manage-course',
     component: ListCourse
   },
   {

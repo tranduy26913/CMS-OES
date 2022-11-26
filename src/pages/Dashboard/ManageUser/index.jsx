@@ -10,6 +10,8 @@ import {
     TablePagination,
     Paper,
     Button,
+    Avatar,
+    Typography,
 } from "@mui/material"
 import Scrollbar from 'components/Scrollbar';
 import SearchNotFound from 'components/SearchNotFound';
@@ -22,18 +24,21 @@ import SelectStatus from './component/SelectStatus';
 import SelectUpgrade from './component/SelectUpgrade';
 import FileSaver from 'file-saver';
 import * as XLSX from 'xlsx'
+import { useDispatch, useSelector } from 'react-redux';
+import { setListUser } from 'slices/userSlice';
+import Page from 'components/Page';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
     { id: 'fullname', label: 'Tên người dùng', align: 'left' },
-    { id: 'count', label: 'Email', align: 'center' },
-    { id: 'gender', label: 'Giới tính', align: 'center' },
-    { id: 'birthday', label: 'Ngày sinh', align: 'center' },
+    { id: 'username', label: 'Tên đăng nhập', align: 'center' },
+    { id: 'email', label: 'Email', align: 'center' },
+    // { id: 'birthday', label: 'Ngày sinh', align: 'center' },
     { id: 'role', label: 'Quyền hạn', align: 'center' },
     { id: 'premium', label: 'Tài khoản', align: 'center' },
     { id: 'status', label: 'Trạng thái', align: 'center' },
-    { id: '', label: 'Thao tác', align: 'right' },
+    // { id: '', label: 'Thao tác', align: 'right' },
 ];
 
 // ----------------------------------------------------------------------
@@ -73,8 +78,21 @@ const ListExaminationTeacher = () => {
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [users, setUsers] = useState(samples)
-    const [role, setRole] = useState('')
+    const { users } = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    //const [users, setUsers] = useState(samples)
+    useEffect(() => {
+        const loadListUser = () => {//lấy danh sách bài kiểm tra
+
+            apiAdmin.getAllUsers()
+                .then(res => {
+                    //setUsers(res)
+                    dispatch(setListUser(res))
+                })
+        }
+        loadListUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -101,45 +119,34 @@ const ListExaminationTeacher = () => {
 
     const isUserNotFound = filteredUsers.length === 0;
 
-    //Effect
-    useEffect(() => {
-        const loadListUser = () => {//lấy danh sách bài kiểm tra
 
-            apiAdmin.getAllCourses()
-                .then(res => {
-                    setUsers(res)
-                })
-        }
-        //loadListUser()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const exportToCSV = () => {
         const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
         const fileExtension = '.xlsx';
         const fileName = 'Dữ liệu người dùng'
         const listRole = {
-            TEACHER:'Giáo viên',
-            STUDENT:'Học viên',
-            ADMIN:'Admin',
+            TEACHER: 'Giáo viên',
+            STUDENT: 'Học viên',
+            ADMIN: 'Admin',
         }
         const listStatus = {
-            active:'Kích hoạt',
-            inactive:'Chưa kích hoạt',
-            deleted:'Đã xoá',
-            lock:'Đã khoá'
+            active: 'Kích hoạt',
+            inactive: 'Chưa kích hoạt',
+            deleted: 'Đã xoá',
+            lock: 'Đã khoá'
         }
         let data = filteredUsers.map(item => {
-            let { fullname, email, birthday, status, gender, role, premium  } = item
-            
+            let { fullname, email, birthday, status, gender, role, premium } = item
+
             return {
                 'Họ và tên': fullname,
                 'Email': email,
                 'Ngày sinh': moment(birthday).format('DD-MM-YYYY'),
-                'Giới tính': gender==='male'?'Nam':'Nữ',
+                'Giới tính': gender === 'male' ? 'Nam' : 'Nữ',
                 'Trạng thái': listStatus[status],
-                'Quyền hạn':listRole[role],
-                'Cấp độ':premium?"PREMIUM":'FREE'
+                'Quyền hạn': listRole[role],
+                'Cấp độ': premium ? "PREMIUM" : 'FREE'
             }
         })
         const ws = XLSX.utils.json_to_sheet(data);
@@ -156,87 +163,97 @@ const ListExaminationTeacher = () => {
         )
     }
     return (
-        <Box >
-            <Stack spacing={1}>
-                <Paper elevation={24}>
-                    <TableToolbar ButtonCustom={ButtonExportFile} filterName={filterName} onFilterName={handleFilterByName} />
-                    <Scrollbar>
-                        <TableContainer sx={{ minWidth: 800, padding: '0 12px' }}>
-                            <Table>
-                                <TableHeadCustom
-                                    order={order}
-                                    orderBy={orderBy}
-                                    headLabel={TABLE_HEAD}
-                                    rowCount={users.length}
-                                    onRequestSort={handleRequestSort}
-                                />
-                                <TableBody>
-                                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                        const { id: idUser, fullname, email, birthday, status, gender, role, premium } = row;
+        <Page title='Phân quyền người dùng'>
+            <Box>
+                <Stack spacing={1}>
+                    <Paper elevation={24}>
+                        <TableToolbar ButtonCustom={ButtonExportFile} filterName={filterName} onFilterName={handleFilterByName} />
+                        <Scrollbar>
+                            <TableContainer sx={{ minWidth: 800, padding: '0 12px' }}>
+                                <Table>
+                                    <TableHeadCustom
+                                        order={order}
+                                        orderBy={orderBy}
+                                        headLabel={TABLE_HEAD}
+                                        rowCount={users.length}
+                                        onRequestSort={handleRequestSort}
+                                    />
+                                    <TableBody>
+                                        {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                            const { id: idUser, username,fullname, email, avatar, birthday, status, gender, role, premium } = row;
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                key={idUser}
-                                                tabIndex={-1}
-                                            >
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    key={idUser}
+                                                    tabIndex={-1}
+                                                >
 
-                                                <TableCell align="left">{fullname}</TableCell>
-                                                <TableCell align="center">{email}</TableCell>
-                                                <TableCell align="center">{moment(birthday).format('DD/MM/YYYY')}</TableCell>
-                                                <TableCell align="center">{gender === 'male' ? 'Nam' : 'Nữ'}</TableCell>
-                                                
-                                                <TableCell align="center">
-                                                    <SelectRole role={role} id={idUser}/>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <SelectUpgrade premium={premium} id={idUser}/>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <SelectStatus status={status} id={idUser}/>
-                                                </TableCell>
-                                                {/* <TableCell align="center">{premium?'PREMIUM':'FREE'}</TableCell> */}
-                                                
+                                                    <TableCell sx={{ width: '20%' }} align="left">
+                                                        <Stack direction='row' alignItems='center' spacing={1}>
+                                                            <Avatar alt={fullname} src={avatar} />
+                                                            <Typography>
+                                                                {fullname}
+                                                            </Typography>
+                                                        </Stack>
+                                                    </TableCell>
+                                                    <TableCell align="left">{username}</TableCell>
+                                                    <TableCell align="center">{email}</TableCell>
+                                                    {/* <TableCell align="center">{moment(birthday).format('DD/MM/YYYY')}</TableCell>
+                                                <TableCell align="center">{gender === 'male' ? 'Nam' : 'Nữ'}</TableCell> */}
 
-                                                <TableCell sx={{ width: '100px' }} align="right">
-                                                    <UserMoreMenu status={status} id={idUser} premium={premium} />
+                                                    <TableCell align="center">
+                                                        <SelectRole role={role} username={username} />
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <SelectUpgrade premium={premium} id={idUser} />
+                                                    </TableCell>
+                                                    <TableCell align="center">
+                                                        <SelectStatus status={status} username={username} id={idUser} />
+                                                    </TableCell>
+                                                    {/* <TableCell align="center">{premium?'PREMIUM':'FREE'}</TableCell> */}
+
+
+                                                    {/* <TableCell sx={{ width: '100px' }} align="right">
+                                                        <UserMoreMenu status={status} id={idUser} premium={premium} />
+                                                    </TableCell> */}
+                                                </TableRow>
+                                            );
+                                        })}
+                                        {emptyRows > 0 && (
+                                            <TableRow style={{ height: 53 * emptyRows }}>
+                                                <TableCell colSpan={6} />
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+
+                                    {isUserNotFound && (
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                                                    <SearchNotFound searchQuery={filterName} />
                                                 </TableCell>
                                             </TableRow>
-                                        );
-                                    })}
-                                    {emptyRows > 0 && (
-                                        <TableRow style={{ height: 53 * emptyRows }}>
-                                            <TableCell colSpan={6} />
-                                        </TableRow>
+                                        </TableBody>
                                     )}
-                                </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Scrollbar>
 
-                                {isUserNotFound && (
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                                                <SearchNotFound searchQuery={filterName} />
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                )}
-                            </Table>
-                        </TableContainer>
-                    </Scrollbar>
-
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        labelRowsPerPage='Số dòng mỗi trang'
-                        count={users.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </Stack>
-        </Box>
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            labelRowsPerPage='Số dòng mỗi trang'
+                            count={users.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                </Stack>
+            </Box>
+        </Page>
     )
 }
 

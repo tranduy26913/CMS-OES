@@ -5,7 +5,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState:{
         info:null,
-        questions:[]
+        users:[]
     },
     reducers: {
         setUserInfo:(state,action)=>{
@@ -40,7 +40,13 @@ export const userSlice = createSlice({
         },
         clearQuestion: (state, action)=>{
             state.questions = []
-        }
+        },
+        setListUser:(state,action)=>{
+            state.users = action.payload
+        },
+        clearUsers: (state, action)=>{
+            state.questions = []
+        },
     }
 })
 
@@ -52,7 +58,9 @@ export const {
     clearQuestion,
     setUserInfo,
     clearUserInfo,
-    updateAvatar
+    updateAvatar,
+    setListUser,
+    clearUsers
 } = userSlice.actions
 
 export default userSlice.reducer

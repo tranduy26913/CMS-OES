@@ -23,17 +23,20 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         backgroundColor: theme.palette.primary.main,
     },
     '&.inactive .MuiInputBase-input': {
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.warning.main,
     },
     '&.lock .MuiInputBase-input': {
         backgroundColor: theme.palette.grey[700],
+    },
+    '&.deleted .MuiInputBase-input': {
+        backgroundColor: theme.palette.error.main,
     },
 
 }));
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-function SelectStatus({ id, status }) {
+function SelectStatus({ id, status ,username}) {
     const [openDialog, setOpenDialog] = useState(false)
     const [newStatus, setNewStatus] = useState(status)
 
@@ -49,7 +52,7 @@ function SelectStatus({ id, status }) {
     }
     const handleChangeStatusUser = () => {
         let idToast = toast.loading('Đang cập nhật')
-        apiAdmin.updateStatusUser({ newStatus })
+        apiAdmin.updateStatusUser({userId:id,status: newStatus })
             .then(res => {
                 toast.update(idToast, { render: 'Cập nhật thành công', isLoading: false, type: 'success', autoClose: 1200 })
             })
@@ -69,6 +72,7 @@ function SelectStatus({ id, status }) {
                 <MenuItem value={'active'}>Kích hoạt</MenuItem>
                 <MenuItem value={'inactive'}>Chưa kích hoạt</MenuItem>
                 <MenuItem value={'lock'}>Khoá</MenuItem>
+                <MenuItem value={'deleted'}>Đã xoá</MenuItem>
             </Select>
             {
                 openDialog &&

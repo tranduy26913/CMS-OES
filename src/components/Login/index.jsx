@@ -78,7 +78,7 @@ const Login = () => {
                     dispatch(loginSuccess(res))
                     dispatch(setUserInfo(res))
                     toast.success("Đăng nhập thành công")
-                    navigate("/my/profile")
+                    navigate("/")
                 }
                 else {
                     toast.error("Sai tên đăng nhập hoặc mật khẩu")

@@ -94,7 +94,7 @@ function StatisticExam(props) {
           </Grid>
 
           <Paper>
-            <TableStudent/>
+            <TableStudent exams = {exams}/>
           </Paper>
         
       </Stack>

@@ -156,7 +156,7 @@ const ListExaminationTeacher = () => {
         let data = []
         for(let i=1;i<=10;i++){
             let curDate = moment().subtract(i,'days').toISOString().substring(0,10)
-            let arr = bills.filter(e=>e.updatedAt?.indexOf(curDate)>=0)
+            let arr = bills.filter(e=>e.createdAt?.indexOf(curDate)>=0)
             let amount = arr.reduce((total,cur)=>cur.status === 'success'?total+Number(cur.amount):total,0)
             data.push({
                 label:curDate,
