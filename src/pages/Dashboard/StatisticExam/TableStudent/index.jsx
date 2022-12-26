@@ -8,14 +8,11 @@ import {
     TableCell,
     TableContainer,
     TablePagination,
+    Button,
 } from "@mui/material"
 import Scrollbar from 'components/Scrollbar';
 import SearchNotFound from 'components/SearchNotFound';
-import { TableToolbar } from 'components/TableCustom';
-import TableHeadCustom from './TableHeadCustom';
-import { useParams } from 'react-router-dom';
-import apiStatistic from 'apis/apiStatistic';
-import { useSelector } from 'react-redux';
+import { TableHeadCustom, TableToolbar } from 'components/TableCustom';
 import TakeExamAction from '../TakeExamAction';
 
 
@@ -23,11 +20,12 @@ import TakeExamAction from '../TakeExamAction';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-    { id: 'name', label: 'Tên đề thi', alignRight: false },
-    { id: 'na', label: 'Điểm', alignRight: false },
-    { id: 'role', label: 'Lần thi', alignRight: false },
-    { id: 'isVerified', label: 'Thời lượng', alignRight: false },
-    { id: 'status', label: 'Thời gian nộp', alignRight: false },
+    { id: 'name', label: 'Tên đề thi', align: 'left' },
+    { id: 'na', label: 'Điểm', align: 'center' },
+    { id: 'role', label: 'Lần thi', align: 'center' },
+    { id: 'isVerified', label: 'Thời lượng', align: 'center' },
+    { id: 'status', label: 'Thời gian nộp', align: 'center' },
+    { id: 'status', label: 'Thao tác', align: 'right' },
 ];
 
 // ----------------------------------------------------------------------
@@ -68,8 +66,6 @@ const TableStudent = ({exams}) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
     //const [exams, setExams] = useState(tests)
-    const { slug } = useParams()//lấy slug exam
-    const role = useSelector(state => state.setting.role)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -91,13 +87,19 @@ const TableStudent = ({exams}) => {
     const filteredUsers = applySortFilter(tests, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
-
+    const ButtonExportFile = () => {
+        return (
+            <Button variant='outlined'>
+                Xuất File Excel
+            </Button>
+        )
+    }
 
     return (
 
         <Stack>
             <TableToolbar filterName={filterName} onFilterName={handleFilterByName}
-                button={{ display: "Xuất File Excel", path: '/teacher/create-exam' }} />
+                ButtonCustom={ButtonExportFile} />
 
             <Scrollbar>
                 <TableContainer sx={{ minWidth: 800, padding: '0 12px' }}>
@@ -122,9 +124,9 @@ const TableStudent = ({exams}) => {
 
                                         <TableCell align="left">{name}</TableCell>
                                         <TableCell align="center">{points}</TableCell>
-                                        <TableCell align="left">{turns}</TableCell>
-                                        <TableCell align="left">{duration}</TableCell>
-                                        <TableCell align="left">
+                                        <TableCell align="center">{turns}</TableCell>
+                                        <TableCell align="center">{duration}</TableCell>
+                                        <TableCell align="center">
                                             {submitTime}
                                         </TableCell>
 

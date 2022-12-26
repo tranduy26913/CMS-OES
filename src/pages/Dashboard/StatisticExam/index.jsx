@@ -15,7 +15,6 @@ function StatisticExam(props) {
   const [exams, setExams] = useState([])
   useEffect(() => {
     const getStatistic = () => {
-    
       apiAdmin.getAllTakeExam()
         .then(res => {
           setExams(res)
@@ -47,13 +46,13 @@ function StatisticExam(props) {
   return (
     <Page title='Thống kê bài thi'>
       <Stack spacing={2}>
-      <Grid container spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Số lượt làm bài" total={exams.length} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Kết quả trung bình" text={`${avgPoints}${maxPoints ? `/${maxPoints}` : ''}`} total={`${avgPoints}${maxPoints ? `/${maxPoints}` : ''}`} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Kết quả trung bình" text={`${avgPoints.toFixed(2)}${maxPoints ? `/${maxPoints}` : ''}`} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
 
@@ -66,37 +65,10 @@ function StatisticExam(props) {
           </Grid>
         </Grid>
 
-        
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Paper>
-              <PieChartPoint
-                chartData={[
-                  { label: '0-2', value: 4344 },
-                  { label: '2-4', value: 5435 },
-                  { label: '4-6', value: 1443 },
-                  { label: '6-8', value: 4443 },
-                  { label: '8-10', value: 4443 },
-                ]}
-              /></Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper>
-              <PieChartPoint
-                chartData={[
-                  { label: 'America', value: 4344 },
-                  { label: 'Asia', value: 5435 },
-                  { label: 'Europe', value: 1443 },
-                  { label: 'Africa', value: 4443 },
-                ]}
-              /></Paper>
-            </Grid>
-          </Grid>
+        <Paper>
+          <TableStudent exams={exams} />
+        </Paper>
 
-          <Paper>
-            <TableStudent exams = {exams}/>
-          </Paper>
-        
       </Stack>
     </Page>
   )

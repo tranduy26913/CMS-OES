@@ -23,7 +23,7 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
         return res.data;
     },
     getAllTakeExam: async (params) => {
-        const res = await axiosClientWithToken.get('/statistic/exam-detail-by-teacher')
+        const res = await axiosClientWithToken.get('/statistic/take-exam-detail')
         return res.data;
     },
     deleteUser: async (params) => {

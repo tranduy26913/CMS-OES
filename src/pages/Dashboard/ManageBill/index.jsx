@@ -154,7 +154,7 @@ const ListExaminationTeacher = () => {
 
     const series = (()=>{
         let data = []
-        for(let i=1;i<=10;i++){
+        for(let i=1;i<=15;i++){
             let curDate = moment().subtract(i,'days').toISOString().substring(0,10)
             let arr = bills.filter(e=>e.createdAt?.indexOf(curDate)>=0)
             let amount = arr.reduce((total,cur)=>cur.status === 'success'?total+Number(cur.amount):total,0)
@@ -208,7 +208,7 @@ const ListExaminationTeacher = () => {
                                 />
                                 <TableBody>
                                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                        const { id, fullname, description, amount, status, method, createdAt } = row;
+                                        const { id, name, description, amount, status, method, createdAt } = row;
 
                                         return (
                                             <TableRow
@@ -217,7 +217,7 @@ const ListExaminationTeacher = () => {
                                                 tabIndex={-1}
                                             >
 
-                                                <TableCell align="left">{fullname}</TableCell>
+                                                <TableCell align="left">{name}</TableCell>
                                                 <TableCell align="center">{description}</TableCell>
                                                 <TableCell align="center">{numWithCommas(amount)}đ</TableCell>
                                                 <TableCell align="center">{moment(createdAt).format('DD/MM/YYYY')}</TableCell>

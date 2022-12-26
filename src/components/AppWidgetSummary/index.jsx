@@ -1,7 +1,7 @@
 // @mui
 import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
-import { Card, darken, lighten, SvgIcon, Typography } from '@mui/material';
+import { Card, darken, lighten, SvgIcon, Typography, Paper} from '@mui/material';
 // utils
 import { fShortenNumber } from 'utils/formatNumber';
 // components
@@ -31,10 +31,11 @@ AppWidgetSummary.propTypes = {
 
 export default function AppWidgetSummary({ title, total, Icon, text,color = 'primary', sx, ...other }) {
   return (
+    <Paper elevation={6}>
     <Card
       sx={{
         py: 5,
-        boxShadow: 0,
+        //boxShadow: 0,
         textAlign: 'center',
         color: (theme) => darken(theme.palette[color].main,0.4),
         bgcolor: (theme) => lighten(theme.palette[color].main,0.4),
@@ -58,5 +59,6 @@ export default function AppWidgetSummary({ title, total, Icon, text,color = 'pri
         {title}
       </Typography>
     </Card>
+    </Paper>
   );
 }

@@ -188,7 +188,6 @@ const ListExaminationTeacher = () => {
                                                     key={idUser}
                                                     tabIndex={-1}
                                                 >
-
                                                     <TableCell sx={{ width: '20%' }} align="left">
                                                         <Stack direction='row' alignItems='center' spacing={1}>
                                                             <Avatar alt={fullname} src={avatar} />
