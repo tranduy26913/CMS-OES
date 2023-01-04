@@ -77,10 +77,10 @@ const pages = [
     path: '/',
     display: 'Trang chủ'
   },
-  {
-    path: '/my/list-course',
-    display: 'Khoá học'
-  },
+  // {
+  //   path: '/my/list-course',
+  //   display: 'Khoá học'
+  // },
   {
     path: '/aboutus',
     display: 'Về chúng tôi'
@@ -91,10 +91,10 @@ const settings = [
     display: 'Profile',
     path: 'profile'
   },
-  {
-    display: 'Khoá học',
-    path: 'list-course'
-  },
+  // {
+  //   display: 'Khoá học',
+  //   path: 'list-course'
+  // },
 ];
 
 const AppBarShadow = styled(AppBar)(({ theme }) => ({
@@ -270,14 +270,14 @@ function Header() {
 
                     )
                   })}
-                  {role === 'student' ?
+                  {/* {role === 'student' ?
                     <MenuItem onClick={()=>handleChangeRole('teacher')}>
                       <Typography textAlign="center">Vào giao diện giáo viên</Typography>
                     </MenuItem> :
                     <MenuItem onClick={()=>handleChangeRole('student')}>
                       <Typography textAlign="center">Vào giao diện học viên</Typography>
                     </MenuItem>
-                  }
+                  } */}
                   <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">Đăng xuất</Typography>
                   </MenuItem>

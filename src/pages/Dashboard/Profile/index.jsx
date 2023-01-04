@@ -250,7 +250,7 @@ const Profile = () => {
                                 <ListItemText primary="Đổi mật khẩu" />
                             </Stack>
                             <Link to={{
-                                pathname: "/my/profile/change-password",
+                                pathname: "/profile/change-password",
                                 param1: "ee"
                             }}>
                                 <Button size="small" variant="outlined">

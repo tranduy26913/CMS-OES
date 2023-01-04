@@ -84,6 +84,7 @@ function ConfigRoute() {
         {/* Routing customer account */}
 
         <Route path="/" element={<Dashboard sidebarTab={DASHBOARD_TEACHER} />} >
+        <Route index element={makeLoading(<Summary />)} />
           {
             TEACHER.map(item =>
               <Route key={item.path} path={item.path} element={makeLoading(<item.component />)} />)

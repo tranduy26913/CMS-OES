@@ -6,7 +6,7 @@ const apiAuth = {
         return res.data;
     },
     login: async (params) => {
-        const res = await axiosClient.post(`/auth/login`,params)
+        const res = await axiosClient.post(`/auth/login-admin`,params)
         return res.data;
     },
     reActive: async (params) => {
