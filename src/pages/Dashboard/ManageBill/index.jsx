@@ -107,7 +107,7 @@ const ListExaminationTeacher = () => {
         const loadListBill = () => {//lấy danh sách bài kiểm tra
             apiAdmin.getAllBill()
                 .then(res => {
-                    setBills(res)
+                    setBills(res.reverse())
                 })
         }
         loadListBill()
@@ -154,7 +154,7 @@ const ListExaminationTeacher = () => {
 
     const series = (()=>{
         let data = []
-        for(let i=1;i<=15;i++){
+        for(let i=0;i<=15;i++){
             let curDate = moment().subtract(i,'days').toISOString().substring(0,10)
             let arr = bills.filter(e=>e.createdAt?.indexOf(curDate)>=0)
             let amount = arr.reduce((total,cur)=>cur.status === 'success'?total+Number(cur.amount):total,0)
