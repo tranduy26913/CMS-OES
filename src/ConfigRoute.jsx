@@ -21,6 +21,7 @@ const CreateCourse = lazy(() => import("pages/Course/CreateCourse"));
 const QuestionBank = lazy(() => import("pages/Dashboard/QuestionBank"));
 const QuestionBankDetail = lazy(() => import("pages/Dashboard/QuestionBankDetail"));
 const ManageBill = lazy(() => import("pages/Dashboard/ManageBill"));
+const ManageWithdrawal = lazy(() => import("pages/Dashboard/ManageWithdrawal"));
 const ManageUser = lazy(() => import("pages/Dashboard/ManageUser"));
 const ResetPassword = lazy(() => import("pages/ResetPassword"));
 const Summary = lazy(() => import("pages/Dashboard/Summary"));
@@ -60,6 +61,10 @@ const TEACHER = [
   {
     path: 'manage-bill',
     component: ManageBill
+  },
+  {
+    path: 'manage-withdrawal',
+    component: ManageWithdrawal
   },
   {
     path: 'notify',

@@ -8,6 +8,7 @@ import BuildIcon from '@mui/icons-material/Build';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import WebhookIcon from '@mui/icons-material/Webhook';
 import SchoolIcon from '@mui/icons-material/School';
+import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 export const DASHBOARD_TEACHER = [
     
     {
@@ -50,9 +51,16 @@ export const DASHBOARD_TEACHER = [
     {
         id: 5,
         icon: CreditCardIcon,
-        text: 'Quản lý thanh toán',
+        text: 'Quản lý nạp tiền',
         link: 'manage-bill',
         list: ['manage-bill']
+    },
+    {
+        id: 5,
+        icon: PriceCheckIcon,
+        text: 'Quản lý rút tiền',
+        link: 'manage-withdraw',
+        list: ['manage-withdrawal']
     },
     {
         id: 1,

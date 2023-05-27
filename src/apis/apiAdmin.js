@@ -10,6 +10,10 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
         const res = await axiosClientWithToken.get('/statistic/list-bills')
         return res.data;
     },
+    getAllTransaction: async (params) => {
+        const res = await axiosClientWithToken.get('/admin/view-transaction-history')
+        return res.data;
+    },
     getAllExam: async (params) => {
         const res = await axiosClientWithToken.get('/statistic/all-bills')
         return res.data;
@@ -44,6 +48,10 @@ import { axiosClient,axiosClientWithToken } from "./axiosClient";
     },
     updateStatusUser: async (params) => {
         const res = await axiosClientWithToken.put('/admin/update-user-status',params)
+        return res.data;
+    },
+    updateStatusTransaction: async (params) => {
+        const res = await axiosClientWithToken.post('/admin/update-transaction-status',params)
         return res.data;
     },
     updateRoleUser: async (params) => {
