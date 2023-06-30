@@ -56,10 +56,10 @@ export const DASHBOARD_TEACHER = [
         list: ['manage-bill']
     },
     {
-        id: 5,
+        id: 6,
         icon: PriceCheckIcon,
         text: 'Quản lý rút tiền',
-        link: 'manage-withdraw',
+        link: 'manage-withdrawal',
         list: ['manage-withdrawal']
     },
     {
@@ -130,7 +130,7 @@ export const SIDEBAR_COURSE_STUDENT = [
         list: ['manage-student'],
     },
     {
-        id: 6,
+        id: 3,
         icon: FavoriteIcon,
         text: 'Thống kê',
         link: 'statistic',
