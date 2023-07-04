@@ -262,7 +262,7 @@ function Header() {
                 >
                   {settings.map((setting) => {
                     return (
-                      <Link key={setting.path} to={`/my/${setting.path}`}>
+                      <Link key={setting.path} to={`/${setting.path}`}>
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center">{setting.display}</Typography>
                         </MenuItem>
