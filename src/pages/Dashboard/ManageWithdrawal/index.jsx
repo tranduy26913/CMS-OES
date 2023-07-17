@@ -163,7 +163,7 @@ const ListTransaction = () => {
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppWidgetSummary title="Tổng số doanh thu" total={sumAmount} color="info" icon={'ant-design:apple-filled'} />
+                        <AppWidgetSummary title="Tổng tiền thanh toán" total={sumAmount} color="info" icon={'ant-design:apple-filled'} />
                     </Grid>
 
                     {/* <Grid item xs={12} sm={6} md={3}>

@@ -51,7 +51,7 @@ export const DASHBOARD_TEACHER = [
     {
         id: 5,
         icon: CreditCardIcon,
-        text: 'Quản lý nạp tiền',
+        text: 'Quản lý doanh thu',
         link: 'manage-bill',
         list: ['manage-bill']
     },
